@@ -1,0 +1,998 @@
+<%  function getBorderClass(spclinter, leadinteraction) {	%>				
+	<%    if (spclinter === 'yes') {	%>
+	<%      return 'green';%>
+	<%    } else if (spclinter === 'no') {%>
+	<%      return 'red';%>
+	<%    } else if (spclinter === 'null') {%>
+       <%      return 'red';%>  
+         <%    } else{ %>
+            <%      return 'red';%>  
+            <%      console.log('error');%>  
+              <%    } %>
+<%  } %>
+         
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="icon" href="g360.png" type="image/png">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<link rel="stylesheet" href="styleformngrdashboard.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<title>Lead Interaction Dashboard</title>
+</head>
+<script>
+    sessionStorage.setItem('userEmail', record.email);
+</script>
+<body>
+
+	<div>
+    <h1 class="title">
+      Manager Dashboard
+    </h1>
+  </div>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+	
+
+
+		<ul class="side-menu top">
+			<li>
+			
+      <div>
+				<button id="employeeLink" class="button-9" role="button" >TEAMSTATUS</button>
+      </div>
+			<div>
+				<button id="employeeList" class="button-9" role="button" >EMPLOYEE LIST</button>
+      </div>
+	 <div>
+		<button id="analyticsButton" class="button-9" role="button" onclick="window.location.href='analytics'">ANALYTICS</button>
+	   </div>
+      <div>
+        <button id="createButton2" class="button-9" role="button" >LEAD CARDS</button>
+      </div>
+
+	 
+			
+		</ul>
+		
+	</section>
+	<!-- SIDEBAR -->
+
+
+
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<i class='bx bx-menu' ></i>
+			<a href="#" class="nav-link">Categories</a>
+			<form action="#">
+				<div class="form-input">
+					<input type="text" id="search-empid" placeholder="Search by empid">
+					<button type="submit" class="search-btn"><i class='bx bx-search' ></i></button>
+				</div>
+			</form>
+			<input type="checkbox" id="switch-mode" hidden>
+			<label for="switch-mode" class="switch-mode"></label>
+			<a href="#" class="notification">
+				<i class='bx bxs-bell' ></i>
+				
+			</a>
+			<a href="#" class="profile">
+				<img src="people.png">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
+
+		<!-- MAIN -->
+		<main>
+		
+			<div id="data-container">
+				
+					<div class="record">
+
+						<!-- Add more fields as needed -->
+			<div class="head-title">
+				<div class="left">
+					<h1>Manager Dashboard</h1>
+					
+				</div>
+				<a href="#" class="btn-download" button onclick="window.location.href='login'" >
+					<i class='bx bxs-cloud-download' button id="logout" ></i>
+
+				
+					<span class="text" style="font-size: 16px; color: rgb(255, 255, 255);">LOG OUT</span>
+					
+						
+
+				</a>
+			</div>
+		</div>
+
+		
+			<ul class="box-info">
+
+        <li>
+		<div class="gauge-wrapper">
+			<div class="gauge-outer" id="gauge1" data-min="0" data-max="100" data-value="<%= (employeeData[0].record_count / data.length * 100).toFixed(1) %>">
+				<div class="gauge">
+				   <div class="gauge-inner"></div>
+				   <div class="gauge-spinner alt"></div>
+			    </div>
+			    <div class="pointer"></div>
+			    <div class="gauge-range">
+				   <div class="gauge-min"></div>
+				   <div class="gauge-max"></div>
+				   <div class="gauge-value"></div>
+			    </div>
+			    
+			</div>
+			
+		 </div>
+		 <h1 style="font-size: 20px;font-weight: 600;"><H1 style="color: rgb(0, 0, 0);">LEAD <br> INTERACTION</h1></h1>
+
+          
+        </li>
+
+	   <li>
+          <div class="cardBox">
+              <div class="circular-progress">
+                  <span class="progress-value">70%</span>
+              </div>
+		    <h1 style="font-size: 20px;font-weight: 600;"><H1 style="color: rgb(0, 0, 0);">LEAD <br> INTERACTION</h1></h1>
+
+          </div>
+          
+        </li>
+
+	   <li>
+          <div class="cardBox">
+            
+              <div class="circular-progress2">
+			
+                  <span class="progress-value2">0%</span>
+			   
+              </div>
+		    <h1 style="font-size: 20px;font-weight: 600;"><H1 style="color: rgb(0, 0, 0);">EMPLOYEE <br> INTERACTION</h1></h1>
+          </div></li>
+          
+        <li>
+          <div class="cardBox">
+           
+		
+              <div class="circular-progress3">
+                  <span class="progress-value3">70%</span>
+              </div>
+		    <h1 style="font-size: 20px;font-weight: 600;">GOAL COMPLETION <br><H1 style="color: rgb(143, 119, 1);"> <script>
+			var today = new Date();
+			const monthnames = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
+			var month = monthnames[today.getMonth()];
+			document.write(month);
+		</script></H1>
+		</h1>
+          </div>
+          
+        </li>
+       
+      </ul>
+        <ul class="box-info">
+
+		<li>
+			<div style="width: 500px;">
+			
+					<div class="chart">
+					    <canvas id="lineChartnew"></canvas>
+					</div>
+			</div>
+		   </li>
+	   
+				
+				<li>
+					<i class='bx bxs-calendar-check' ></i>
+					<span class="text">
+						<h3><p><%= employeeData[0].record_count %></p></h3>
+						<p>Completed</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3><p><%= (data.length - employeeData[0].record_count) %></p></h3>
+						<p>Pending</p>
+					</span>
+				</li>
+				
+
+
+				
+			</ul>
+		
+			
+
+
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						<h3>EMPLOYEE LIST</h3>
+						<i class='bx bx-search' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+					<table>
+						<thead>
+						    <tr>
+							   <th>ID</th>
+							   <th>Name</th>
+							   <th>Email</th>
+							   <th>INTERACTION</th>
+							   <th>Int_Date</th>
+                  <th>ViewDetails</th>
+						    </tr>
+						</thead>
+						<tbody>
+						    <!-- Replace with actual employee data -->
+						    <% data.forEach(employee => { %>
+							   <tr>   
+								<td><%= employee.empid %></td>
+								<td><%= employee.firstname %><%= employee.lastname %></td>
+								  <td><%= employee.email %></td>
+								  <td><%= employee.spclinter %></td>
+								  <td><%= employee.interaction_date %></td>
+                  <td><button
+                    onclick="showDetails('<%= JSON.stringify(employee) %>')"
+                    style="
+                   background-color: #0078d4;
+                   color: white;
+                   border: none;
+                   padding: 10px 10px;
+                   border-radius: 5px;
+                   cursor: pointer;
+                    "
+                  >
+                    View Details
+                  </button></td>
+							   </tr>
+						    <% }); %>
+						</tbody>
+					 </table>
+				</div>
+				<!-- guage like speedometer -->
+				
+			
+				
+			
+		
+			<div id="data-container2">
+
+				<div class="search-container">
+				  <input
+				    type="text"
+				    class="search-box"
+				    id="searchBox"
+				    placeholder="Search for Employees.."
+				    onkeyup="searchEmployees()"
+				  />
+				  <button onclick="openPopup()" class="btn">Add</button>
+				 
+
+				  
+				<div class="popup" id="popup">
+				  <div class="popup-content">
+					 <h3>Enter Employee Details</h3>
+					 <form action="/setLeadname" method="post">
+						<label for="empid">EmpID:</label>
+						<input type="text" name="empid" id="empid" required>
+					 
+			 
+						<br>
+						<button type="submit">Submit</button>
+					 </form>
+					 <button onclick="closePopup()">Close</button>
+				  </div>
+			   </div>
+			 
+			   <div class="popup2" id="popup2">
+				<div class="popup-content2">
+				  <h3>Remove Employee Lead Name</h3>
+				  <form action="/setLeadname" method="post">
+				    <label for="empid">EmpID:</label>
+				    <input type="text" name="empid" id="empid" required>
+				    <br>
+				    <button type="submit">Remove</button>
+				  </form>
+				  <button onclick="closePopup2()">Close</button>
+				</div>
+			   </div>
+			 
+			 
+			   <button onclick="openPopup2()" class="btn">REMOVE</button>
+				    <button onclick="window.location.href='login'" class="btn" style="width: 200px;">LOGOUT</button>
+				</div>
+			 
+				<div id="content-to-print">
+
+				<div class="container">
+				  <% data.forEach(function(employee) { %>
+				  <div
+				    class="employee-box <%= getBorderClass(employee.interaction, employee.leadinteraction) %>"
+				    id="employee-box-<%= employee.empid %>"
+				  >
+				    <p><strong>EmpID:</strong> <%= employee.empid %></p>
+				    <p>
+					 <strong>Name:</strong> <%= employee.firstname %> <%= employee.lastname%>
+				    </p>
+				    <p><strong>Leademail:</strong> <%= employee.email %></p>
+				    <p><strong>ManagerMail:</strong> <%= employee.manageremail %></p>
+				    <div class="button">
+					
+					 <button
+					   class="interaction-button"
+					   data-empid="<%= employee.empid %>"
+					   data-interaction="yes"
+					   onClick="window.location.reload();"
+					   style="
+						font-weight: 700;
+						background-color: rgba(0, 171, 31, 0);
+						color: white;
+						border: none;
+						padding: 10px 0px;
+						border-radius: 0px;
+					   "
+					   disabled
+					 >
+					   
+					 </button>
+					 <button
+					   class="interaction-button"
+					   data-empid="<%= employee.empid %>"
+					   data-interaction="no"
+					   onClick="window.location.reload();"
+					   style="
+						font-weight: 700;
+						background-color: rgba(226, 0, 0, 0);
+						color: white;
+						border: none;
+						padding: 10px 0px;
+						border-radius: 0px;
+					   "
+					   disabled
+					 >
+					     
+					 </button>
+					 
+					 
+			 
+					 <button
+					   onclick="showDetails('<%= JSON.stringify(employee) %>')"
+					   style="
+						background-color: #0078d4;
+						color: white;
+						border: none;
+						padding: 10px 10px;
+						border-radius: 5px;
+						cursor: pointer;
+						margin-top: 30px;
+						
+					   "
+					 >
+					   View Details
+					 </button>
+				    </div>
+				  </div>
+				  <% }); %>
+
+				</div>
+			 				</div>
+
+				<div class="details-modal" id="detailsModal">
+				  <div class="details-modal-content">
+				    <span onclick="closeDetails()" style="cursor: pointer; float: right; font-size: 40px; margin-right: 10px; color: rgb(55, 0, 157);border-radius: 20px;width: 20px; font-weight: 900;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">&times;</span>
+			 
+				    <div id="detailsContent"></div>
+				    <button
+					 onclick="closeDetails()"
+					 style="
+					   background-color: #0078d4;
+					   color: white;
+					   border: none;
+					   padding: 10px 20px;
+					   border-radius: 5px;
+					   cursor: pointer;
+					 "
+				    >
+					 OK
+				    </button>
+				    <!-- Details will be displayed here -->
+				  </div>
+				  <br><br><br>
+				</div>
+			 
+			</div>
+		</main>
+
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+
+	<script>
+		const rawData =[{"month":"January","interaction_count":27},{"month":"February","interaction_count":85},
+		{"month":"March","interaction_count":40},{"month":"April","interaction_count":45},
+		{"month":"May","interaction_count":90},{"month":"June","interaction_count":55}];				
+	
+
+		
+rawData.sort((a, b) => {
+    if (a.month === "October") return 1;
+    if (b.month === "October") return -1;
+    return a.month.localeCompare(b.month);
+});
+
+const labels = rawData.map(entry => entry.month);
+const data = rawData.map(entry => entry.interaction_count);
+
+const chartData = {
+    labels: labels,
+    datasets: [
+	   {
+		  label: 'Interaction Count',
+		  data: data,
+		  borderColor: 'rgba(75, 12, 192, 1)',
+		  borderWidth: 3,
+		  pointRadius: 5,
+		pointBackgroundColor: 'rgba(255, 255, 255, 1)',
+		  fill: false,
+		  tension: 0.3,
+	   }
+    ]
+};
+
+const options = {
+    scales: {
+	   x: {
+		  title: {
+			 display: true,
+			 text: 'Month',
+		  },
+	   },
+	   y: {
+		  title: {
+			 display: true,
+			 text: 'Interaction Count',
+		  },
+	   },
+    },
+};
+
+const ctx = document.getElementById('lineChartnew').getContext('2d');
+const devicePixelRatio = window.devicePixelRatio || 1; // Get the device pixel ratio
+ctx.canvas.width = 400 * devicePixelRatio; // Set canvas width with DPR
+ctx.canvas.height = 200 * devicePixelRatio; // Set canvas height with DPR
+ctx.canvas.style.width = "400px"; // Set canvas style width
+ctx.canvas.style.height = "400px"; // Set canvas style height
+
+new Chart(ctx, {
+    type: 'line',
+    data: chartData,
+    options: options,
+});
+		
+// -----------------------------SCRIPT FOR GAUGE-----------------------------
+
+let circularprogress = document.querySelector(".circular-progress");
+        let progressValue = document.querySelector(".progress-value");
+        let circularprogress2 = document.querySelector(".circular-progress2");
+        let progressValue2 = document.querySelector(".progress-value2");
+	   let circularprogress3 = document.querySelector(".circular-progress3");
+	   let progressValue3 = document.querySelector(".progress-value3");
+        let progressStartValue = 0;
+        let progressStartValue2 = 0;
+	   let progressEndValue = 76;
+        let progressEndValue2 = 29;
+	   let progressStartValue3 = 0;
+	   let progressEndValue3 = 45;
+        let speed = 10;
+
+        let progress = setInterval(() => {
+            progressStartValue++;
+
+            progressValue.textContent = `${progressStartValue}%`;
+
+            if (progressStartValue < 30) {
+                circularprogress.style.background = `conic-gradient(#e82a2a ${progressStartValue * 3.6}deg, rgb(216, 216, 216) 0deg)`;
+            } else if (progressStartValue < 70) {
+                circularprogress.style.background = `conic-gradient(#e8b12a ${progressStartValue * 3.6}deg, rgb(216, 216, 216) 0deg)`;
+            } else if (progressStartValue >= 70) {
+                circularprogress.style.background = `conic-gradient(#18d000 ${progressStartValue * 3.6}deg, rgb(216, 216, 216) 0deg)`;
+            }
+
+            if (progressStartValue == progressEndValue) {
+                clearInterval(progress);
+            }
+        }, speed);
+
+        let progress2 = setInterval(() => {
+            progressStartValue2++;
+            progressValue2.textContent = `${progressStartValue2}%`;
+
+            if (progressStartValue2 < 30) {
+                circularprogress2.style.background = `conic-gradient(#e82a2a ${progressStartValue2 * 3.6}deg, rgb(216, 216, 216) 0deg)`;
+            } else if (progressStartValue < 70) {
+                circularprogress2.style.background = `conic-gradient(#e8b12a ${progressStartValue2 * 3.6}deg, rgb(216, 216, 216) 0deg)`;
+            } else if (progressStartValue >= 70) {
+                circularprogress2.style.background = `conic-gradient(#18d000 ${progressStartValue2 * 3.6}deg, rgb(216, 216, 216) 0deg)`;
+            }
+
+            if (progressStartValue2 == progressEndValue2) {
+                clearInterval(progress2);
+            }
+        }, speed);
+
+	   let progress3 = setInterval(() => {
+		  progressStartValue3++;
+		  progressValue3.textContent = `${progressStartValue3}%`;
+
+		  if (progressStartValue3 < 30) {
+			 circularprogress3.style.background = `conic-gradient(#e82a2a ${progressStartValue3 * 3.6}deg, rgb(216, 216, 216) 0deg)`;
+		  } else if (progressStartValue < 70) {
+			 circularprogress3.style.background = `conic-gradient(#e8b12a ${progressStartValue3 * 3.6}deg, rgb(216, 216, 216) 0deg)`;
+		  } else if (progressStartValue >= 70) {
+			 circularprogress3.style.background = `conic-gradient(#18d000 ${progressStartValue3 * 3.6}deg, rgb(216, 216, 216) 0deg)`;
+		  }
+
+		  if (progressStartValue3 == progressEndValue3) {
+			 clearInterval(progress3);
+		  }
+	   }, speed);
+
+	   // -----------------------------
+
+
+// -----------------------------SCRIPT FOR SIDEBAR-----------------------------
+
+		// Example: Yes button click event
+const yesButton = document.querySelector('.interaction-button[data-interaction="yes"]');
+
+// Add a click event listener
+yesButton.addEventListener('click', function () {
+  console.log('Yes button clicked');
+});
+
+
+	const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+
+allSideMenu.forEach(item=> {
+	const li = item.parentElement;
+
+	item.addEventListener('click', function () {
+		allSideMenu.forEach(i=> {
+			i.parentElement.classList.remove('active');
+		})
+		li.classList.add('active');
+	})
+});
+
+
+logout.addEventListener('click', function () {
+	window.location.href = 'login';
+})
+
+
+
+
+// TOGGLE SIDEBAR
+const menuBar = document.querySelector('#content nav .bx.bx-menu');
+const sidebar = document.getElementById('sidebar');
+
+
+
+// -----------------------------
+
+const searchButton = document.querySelector('#content nav form .form-input button');
+const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+const searchForm = document.querySelector('#content nav form');
+const searchInput = document.querySelector('#search-empid'); // Add this line to get the input field
+
+searchButton.addEventListener('click', function (e) {
+  if (window.innerWidth < 576) {
+    e.preventDefault();
+    searchForm.classList.toggle('show');
+    if (searchForm.classList.contains('show')) {
+      searchButtonIcon.classList.replace('bx-search', 'bx-x');
+    } else {
+      searchButtonIcon.classList.replace('bx-x', 'bx-search');
+    }
+  } else {
+    // Handle the search functionality
+    const searchTerm = searchInput.value.trim();
+    if (searchTerm !== '') {
+      // Use searchTerm to filter the table rows and display only matching rows
+      filterTableByEmpid(searchTerm);
+    }
+  }
+});
+
+function filterTableByEmpid(empid) {
+  // Replace 'your-table-id' with the actual ID of your table
+  const table = document.getElementById('your-table-id');
+  const rows = table.getElementsByTagName('tr');
+  
+  for (let i = 1; i < rows.length; i++) { // Start from 1 to skip the table header row
+    const cell = rows[i].getElementsByTagName('td')[3]; // Assuming empid is in the 4th column (index 3)
+    if (cell) {
+      const cellText = cell.textContent || cell.innerText;
+      if (cellText.includes(empid)) {
+        rows[i].style.display = '';
+      } else {
+        rows[i].style.display = 'none';
+      }
+    }
+  }
+}
+
+// -----------------------------------
+
+
+
+
+
+
+if(window.innerWidth < 768) {
+	sidebar.classList.add('hide');
+} else if(window.innerWidth > 576) {
+	searchButtonIcon.classList.replace('bx-x', 'bx-search');
+	searchForm.classList.remove('show');
+}
+
+
+window.addEventListener('resize', function () {
+	if(this.innerWidth > 576) {
+		searchButtonIcon.classList.replace('bx-x', 'bx-search');
+		searchForm.classList.remove('show');
+	}
+})
+
+
+
+const switchMode = document.getElementById('switch-mode');
+
+switchMode.addEventListener('change', function () {
+	if(this.checked) {
+		document.body.classList.add('dark');
+	} else {
+		document.body.classList.remove('dark');
+	}
+})
+
+$(document).ready(function () {
+	var gaugeObj = $('#gauge1'),
+	    gaugeMin = gaugeObj.data('min'),
+	    gaugeMax = gaugeObj.data('max'),
+	    gaugeValue = gaugeObj.data('value');
+	setRangeText(gaugeObj);
+	setGauge(gaugeObj, gaugeMin, gaugeMax, gaugeValue);
+ 
+ 
+	function setRangeText(gaugeObj) {
+	    gaugeObj.find('.gauge-min').text(gaugeMin);
+	    gaugeObj.find('.gauge-max').text(gaugeMax);
+	    gaugeObj.find('.gauge-value').text(gaugeValue);
+	}
+ 
+ 
+	function setGauge(gaugeObj, gaugeMin, gaugeMax, gaugeValue) {
+	    var percentage = (gaugeValue / gaugeMax),
+		   degrees = 180 * percentage,
+		   pointerDegrees = degrees - 90,
+		   spinner = gaugeObj.find('.gauge-spinner'),
+		   pointer = gaugeObj.find('.pointer');
+ 
+ 
+	    spinner.css('transform', 'rotate(' + degrees + 'deg)');
+	    pointer.css('transform', 'rotate(' + pointerDegrees + 'deg)');
+	}
+ 
+ 
+ });
+
+
+
+fetch('/data2')
+    .then(response => response.json())
+    .then(data => {
+	 const lineChartnew = document.getElementById('data-container');
+	 const employeeData2 = data2.employeeData2; // Assuming employeeData is in the first record
+    })
+    .catch(error => {
+	 console.error('Error fetching data:', error);
+    });
+
+
+ fetch('/data')
+    .then(response => response.json())
+    .then(data => {
+      const dataContainer = document.getElementById('data-container');
+	//  const employeeData = data[0].employeeData; // Assuming employeeData is in the first record
+	 const userEmail2 = userEmail; // Get the email
+      const employeeDataContainer = document.getElementById('employee-data-container');
+      //employeeDataContainer.innerHTML = `Employee Data: ${employeeData}`;
+
+      // Iterate through the data and display it in the HTML
+      data.forEach(record => {
+        const recordHTML = document.createElement('div');
+        recordHTML.innerHTML = `<p>ID: ${record.id}</p>
+                               <p>Firstname: ${record.firstname}</p>
+                               <p>Lastname: ${record.lastname}</p>
+                               <p>Email: ${record.email}</p>
+                               <p>Interaction Time: ${record.interaction_time}</p>
+						 <p>Interaction Date: ${record.interaction_date}</p>
+						 <p>Lead Interaction: ${record.leadinteraction}</p>
+						 <p>Lead Email: ${record.leademail}</p>
+						 <p>Manager Email: ${record.manageremail}</p>
+						 <p>Empid: ${record.empid}</p>
+						 <p>Lead Name: ${record.leadname}</p>
+						 <p>Manager Name: ${record.managername}</p>
+                               <!-- Add more fields as needed -->`;
+        dataContainer.appendChild(recordHTML);
+      });
+
+      // Access and display employeeData
+      
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+
+
+    // -----------------------------FETCH RAW DATA-----------------------------
+    fetch('/rawData')
+    .then(response => response.json())
+    .then(data => {
+	 const lineChartnew = document.getElementById('lineChartnew');
+	 const rawData = JSON.stringify(rawData); // Assuming employeeData is in the first record
+    })
+    .catch(error => {
+	 console.error('Error fetching data:', error);
+    });
+
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+
+
+     
+        // Find the button by its ID
+        const employeeLinkButton = document.getElementById("employeeLink");
+        const employeeListButton = document.getElementById("employeeList");
+
+        // Add a click event listener
+        employeeLinkButton.addEventListener("click", function () {
+          // Redirect to the "emp.ejs" page
+          window.location.href = "round";
+        });
+        employeeListButton.addEventListener("click", function () {
+          // Redirect to the "emp.ejs" page
+          window.location.href = "emplist";
+        });
+     
+    
+  const interactionButtons = document.querySelectorAll(".interaction-button");
+
+  interactionButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+	
+      const empid = button.getAttribute("data-empid");
+      const interaction = button.getAttribute("data-interaction");
+
+      // Debugging: Check the values before sending the fetch request
+      console.log("Sending empid:", empid);
+      console.log("Sending interaction:", interaction);
+
+      // Create an object to send in the request body
+      const data = {
+        empid: empid,
+        interaction: interaction,
+      };
+
+      // Debugging: Check the data object
+      console.log("Sending data:", data);
+
+      fetch('/updateInteraction', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json", // Set the content type to JSON
+        },
+        body: JSON.stringify(data), // Convert the data to JSON
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Response data:', data);
+
+          if (data.success) {
+            const employeeBox = document.getElementById(`employee-box-${empid}`);
+            button.disabled = true;
+            button.style.backgroundColor = "#999";
+          }
+        })
+        .catch((error) => {
+          console.error("Error updating interaction:", error);
+        });
+    });
+  });
+});
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const createButton2 = document.getElementById('createButton2');
+    const createSection2 = document.getElementById('data-container2');
+   
+
+
+    
+
+
+    createButton2.addEventListener('click', function () {
+	   toggleVisibility(createSection2);
+
+    });
+
+
+    function toggleVisibility(section) {
+        if (section.classList.contains('hidden')) {
+            section.classList.remove('hidden');
+        } else {
+            section.classList.add('hidden');
+        }
+    }
+});
+
+    
+
+    function downloadasexcel() {
+	   window.location.href = "/downloadasexcel";
+    }
+    
+
+
+
+
+
+      function searchEmployees() {
+        var input, filter, employeeBoxes, i, txtValue;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        employeeBoxes = document.querySelectorAll(".employee-box");
+
+        employeeBoxes.forEach(function (box) {
+          var paragraphs = box.querySelectorAll("p");
+          var found = false;
+
+          paragraphs.forEach(function (p) {
+            txtValue = p.textContent || p.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              found = true;
+            }
+          });
+
+          if (found) {
+            box.style.display = "block";
+          } else {
+            box.style.display = "none";
+          }
+        });
+      }
+      function showDetails(details) {
+        var modal = document.getElementById("detailsModal");
+        var modalContent = document.getElementById("detailsContent");
+        modalContent.innerHTML = "<h2>Details</h2>";
+        var employee = JSON.parse(details);
+        var excludedFields = ["password", "confirmpass"];
+
+        function formatFieldName(fieldName) {
+          return fieldName.replace(/_/g, " ").replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+          });
+        }
+
+        for (var key in employee) {
+          if (excludedFields.includes(key)) {
+            continue;
+          }
+
+          if (key === "interaction") {
+            if (employee[key] === "yes") {
+              modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(
+                key
+              )}:</strong></span> <span style="color: green;">${
+                employee[key]
+              }</span></p>`;
+            } else if (employee[key] === "no") {
+              modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(
+                key
+              )}:</strong></span> <span style="color: red;">Not Interacted</span></p>`;
+            } else {
+              modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(
+                key
+              )}:</strong></span> <span style="color: black;">Not available</span></p>`;
+            }
+          } else {
+            modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(
+              key
+            )}:</strong></span> ${employee[key] || "Not available"}</p>`;
+          }
+        }
+        modal.style.display = "block";
+      }
+      function closeDetails() {
+        var modal = document.getElementById("detailsModal");
+        modal.style.display = "none";
+      }
+
+        function addemp() {
+            window.location.href = "registration";
+        }
+
+
+        function openPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        function openPopup2() {
+          const popup2 = document.getElementById('popup2');
+    popup2.style.display = 'block';
+        }
+
+        function closePopup2() {
+            document.getElementById("popup2").style.display = "none";
+        }
+    
+    const params = new URLSearchParams(window.location.search);
+    const userEmail = params.get('email');
+    // Display the email on the page
+    document.getElementById('userEmail').textContent = userEmail;
+
+    document.getElementById('print-button').addEventListener('click', function() {
+  const contentToPrint = document.getElementById('content-to-print');
+
+  // Create a new window for printing
+  const printWindow = window.open('', '', 'width=600,height=600');
+
+  // Write the content to the new window
+  printWindow.document.open();
+  printWindow.document.write('<html><head><title>Print</title></head><body>');
+  printWindow.document.write(contentToPrint.innerHTML);
+  printWindow.document.write('</body></html>');
+  printWindow.document.close();
+
+  // Wait for the content to load, then print
+  printWindow.onload = function() {
+    printWindow.print();
+    printWindow.close();
+  };
+});
+
+
+
+
+
+  </script>
+
+  
+
+</script>
+</body>
+</html>

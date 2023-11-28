@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-image: url('pix1.png'); /* Set the background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            image-rendering: pixelated;
+            background-color: #b4b4b4; /* Fallback background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            margin: 0;
+        }
+
+        .container {
+           background-color: #ffffffdc;
+            background-image: url('pix1.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            width: 600px;
+            margin-top: 150px;
+            margin-bottom: 50px;
+            text-align: left;
+            align-items: center;
+            animation: fadeIn 0.2s ease-in-out;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #333;
+            
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-gap: 10px;
+        }
+
+        label {
+            color: #444;
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+            display: block;
+            margin: 10px 0;
+            align-items: left;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 50%;
+            padding: 12px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 0;
+            background-color: transparent;
+            color: #333;
+            outline: none;
+            border-bottom: 2px solid transparent;
+            transition: border-bottom 0.3s;
+            position: relative;
+            text-align: left;
+        }
+
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            transition: border-bottom 0.3s;
+            border-bottom: 2px solid #0a005f;
+        }
+
+        /* Custom Class for Line Animation */
+        .line-animation {
+            position: relative;
+        }
+
+        .line-animation::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background-color: #2f015a;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s;
+        }
+
+        .line-animation:focus::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        input[type="submit"] {
+            background-color: #3f0fc4;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            transition: ease-in-out 0.3s;
+            background-color: #000000;
+        }
+
+        .error {
+            color: red;
+            text-align: left;
+            grid-column: span 1;
+        }
+
+        .header1 {
+            background-color: #ffffff33;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .text1{
+            font-size: 20px;
+            font-weight:600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            /* convert to uppercase */
+        }
+        .text2{
+            font-size: 20px;
+            font-weight:600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            /* convert to uppercase */
+            text-transform: uppercase;
+        }
+        .btn1{
+            background-color: #0083cf;
+            color: #ffffff;
+            border-radius: 10px;
+            font-size: 20px;
+            padding: 10px 20px;
+            width: 300px;
+            font-weight: bold;
+            height: 50px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .btn1:hover{
+            background-color: #0b0161;
+            color: #ffffff;
+            transform: scale(1.05);
+            height: 50px;
+            transition: all 0.2s ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    
+        <div class="container">
+        <h1>Employee Details <hr></h1>
+        
+        <!-- Display the error message here -->
+        <h2 style="color: #0c007a;text-transform: uppercase;">Good Day,&nbsp;&nbsp;<%= user.firstname %> </h2>
+        <div class="text1">
+        <b>Employee ID: </b><%= user.empid %>
+        <b><br><br>First Name:      </b><%= user.firstname %>
+        <b><br><br>Last Name:       </b><%= user.lastname %>
+        <b><br><br>Email:           </b><%= user.email %>
+        <b><br><br>Contact Number:  </b><%= user.contactnumber %>
+        <b><br><br>Lead Name:       </b><%= user.leademail %>
+        <b><br><br>Manager Name:    </b><%= user.manageremail %>
+        <h2 style="color: #b94501;text-transform: uppercase;font-size: 20px;">1-1 Status :    </b><%= user.interaction%> </h2>
+        <!-- Add more fields as needed -->
+        <button class="btn1" onclick="window.location.href='/onetwo'">interaction
+        </button><br><br>
+        <button class="btn1" onclick="window.location.href='/endpage'">Confirm
+        </button><br><br>
+
+    </div></div></div> 
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function (e) {
+            const empid = document.getElementById('empid').value;
+            const password = document.getElementById('password').value;
+            const empidPattern = /[0-9]+/;
+
+            if (!empidPattern.test(empid)) {
+                e.preventDefault();
+                document.getElementById('empidError').textContent = 'Employee ID must contain only numeric values.';
+            } else {
+                document.getElementById('empidError').textContent = '';
+                
+            }
+        });
+
+             document.getElementById("closeButton").addEventListener("click", function() {
+                            alert("Button was clicked!");
+
+           // redirect to next page
+              window.location.href = "/onetwo";
+        });
+
+ 
+
+    </script>
+</body>
+
+</html>

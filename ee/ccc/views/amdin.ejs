@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #f0f5ff, #ddf0fd);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .heading {
+            color: #405cf5;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .button-9 {
+            background-color: #405cf5;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 15px 30px;
+            margin: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.2s ease-in;
+            font-size: 18px;
+        }
+
+        .button-9:hover {
+            background-color: #74c92e;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .form-container {
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 18px;
+            color: #464646;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #405cf5;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 15px 30px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #74c92e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="heading">Administration Page</h1>
+    </div>
+    <div class="button-container">
+        <button id="createButton" class="button-9" role="button">Create</button>
+        <button id="updateButton" class="button-9" role="button">Update</button>
+        <button id="deleteButton" class="button-9" role="button">Delete</button>
+        <button id="viewButton" class="button-9" role="button">View</button>
+        <button id="viewAllButton" class="button-9" role="button">View All</button>
+    </div>
+    <div class="form-container">
+        <div id="Create" class="hidden">
+            <form action="/create" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div id="Update" class="hidden">
+            <form action="/update" method="POST">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" required><br>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required><br>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+                <label for="role">Role:</label>
+                <select id="role" name="role" required>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div id="Delete" class="hidden">
+            <form action="/delete" method="POST">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" required><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div id="View" class="hidden">
+            <form action="/view" method="POST">
+                <label for="id">ID:</label>
+                <input type="text" id="id" name="id" required><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div id="ViewAll" class="hidden">
+            <form action="/viewAll" method="POST">
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        
+        <!-- Add similar sections for Update, Delete, View, and View All -->
+    </div>
+
+    <script>
+
+document.addEventListener('DOMContentLoaded', function () {
+    const buttons = [
+        'createButton', 'updateButton', 'deleteButton', 'viewButton', 'viewAllButton'
+    ];
+
+    buttons.forEach(buttonId => {
+        const button = document.getElementById(buttonId);
+        const section = document.getElementById(buttonId.replace('Button', ''));
+
+        button.addEventListener('click', function () {
+            toggleVisibility(section);
+        });
+    });
+
+    function toggleVisibility(clickedSection) {
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            if (section === clickedSection) {
+                section.classList.remove('hidden');
+            } else {
+                section.classList.add('hidden');
+            }
+        });
+    }
+});
+
+ 
+    </script>
+</body>
+</html>
+
+
+
+
+

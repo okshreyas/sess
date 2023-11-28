@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #6c79f0, rgb(20, 184, 239));
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(89, 114, 206);
+        }
+       
+        .containernew {
+            margin-top: 50px;
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            max-width: 1000px;
+            max-height: 1000px;
+            border: 2px solid black;
+        }
+        charth1 {
+            text-align: center;
+            color: #333;
+            height: 50px;
+            max-width: 500px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="containernew">
+        <h1>Analytics for Interaction Details</h1>
+
+        <canvas id="lineChartnew" style="width: 600px; height: 400px; display: block; box-sizing: border-box;"></canvas>
+    </div>
+        <script>
+            const rawData = <%- JSON.stringify(rawData) %>;
+    
+            rawData.sort((a, b) => {
+                if (a.month === "October") return 1;
+                if (b.month === "October") return -1;
+                return a.month.localeCompare(b.month);
+            });
+    
+            const labels = rawData.map(entry => entry.month);
+            const data = rawData.map(entry => entry.interaction_count);
+    
+            const chartData = {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Interaction Count',
+                        data: data,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 3,
+                        pointRadius: 5,
+                        pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                        fill: false,
+                        tension: 0.5,
+                    }
+                ]
+            };
+    
+            const options = {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Month',
+                        },
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Interaction Count',
+                        },
+                    },
+                },
+            };
+    
+            const ctx = document.getElementById('lineChartnew').getContext('2d');
+            const devicePixelRatio = window.devicePixelRatio || 1; // Get the device pixel ratio
+            ctx.canvas.width = 1000 * devicePixelRatio; // Set canvas width with DPR
+            ctx.canvas.height = 600 * devicePixelRatio; // Set canvas height with DPR
+            ctx.canvas.style.width = "1000px"; // Set canvas style width
+            ctx.canvas.style.height = "600px"; // Set canvas style height
+    
+            new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: options,
+            });
+        </script>
+</body>
+
+

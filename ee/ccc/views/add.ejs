@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+ <style>
+  .hidden {
+  display: none;
+}
+
+ </style>
+
+</head>
+
+<body>
+  <button id="showButton">Show Container</button>
+  <div id="container" class="hidden">
+    <!-- Your container content goes here -->
+    <p>This is the container content.</p>
+  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+      const showButton = document.getElementById('showButton');
+      const container = document.getElementById('container');
+
+      showButton.addEventListener('click', function () {
+        // Toggle the visibility of the container
+        if (container.classList.contains('hidden')) {
+          container.classList.remove('hidden');
+        } else {
+          container.classList.add('hidden');
+        }
+      });
+    });
+
+</script>
+</body>
+
+</html>

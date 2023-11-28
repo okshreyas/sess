@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login</title>
+    <style>
+       body {
+            font-family: Arial, sans-serif;
+            background-image: url('pix1.png'); /* Set the background image */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            image-rendering: pixelated;
+            background-color: #b4b4b4; /* Fallback background color */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+           background-color: #ffffffdc;
+            background-image: url('pix1.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 600px;
+            text-align: left;
+            align-items: left;
+            animation: fadeIn 0.2s ease-in-out;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        .text2{
+            font-size: 20px;
+            font-weight:600;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            /* convert to uppercase */
+           
+        }
+  
+    </style>
+</head>
+
+
+<body>
+    <div class="container">
+        <p> <span class="text2">Your Response is being recorded. <br>Please wait...
+        </span></p>
+            <img src="0.gif" alt="Loading" style="max-width: 100%;">
+
+    </div>
+
+    
+
+    <script>
+        function delayedRedirect() {
+            // Wait for 3 seconds (3000 milliseconds) and then redirect
+            setTimeout(function() {
+                window.location.href = 'confirmation'; // Replace with the desired URL
+            }, 1000);
+        }
+
+        // Call the delayedRedirect function when the page loads
+        delayedRedirect();
+    </script>
+</body>
+
+</html>

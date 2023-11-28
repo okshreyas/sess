@@ -1,0 +1,474 @@
+<%function getBorderClass(interaction, leadinteraction) {%>					
+  <%  if (interaction === 'yes' && leadinteraction === 'yes') {%>	
+  <%    return 'green';%>	
+  <%  } else if (interaction === 'yes' && leadinteraction === 'null') {%>	
+  <%    return 'yellow';%>	
+  <%  } else if (interaction === 'yes' && leadinteraction === 'no') {%>	
+  <%    return 'yellow';%>	
+  <%	} else if (interaction === 'no' && leadinteraction === 'yes') {%>	
+  <%    return 'yellow';%>	
+  <%  } else if (interaction === 'no' && leadinteraction === 'no') {%>	
+  <%    return 'red';%>	
+  <%  } else if (interaction === null && leadinteraction === null) {%>	
+  <%    return 'grey';%>	
+  <%  } else {%>	
+  <%    return 'black';%>	
+  <%  }%>	
+  <%}%>	
+  
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Employee List</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #ddf0fd;
+        margin: 0;
+        padding: 0;
+        justify-content: left;
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: 100px;
+
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-left: 100px;
+      }
+
+      .container {
+        width: 98%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        /* border-right: 2px solid #060606;
+        border-left: 2px solid #060606; */
+        border-radius: 8px;
+
+      }
+
+      .employee-box {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 280px;
+        margin: 10px;
+        box-shadow: 0 8px 10px rgba(94, 94, 94, 0.528);
+        border: 1px solid #0078d4;
+      }
+
+      .search-container {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 30px;
+        margin-left: 50px;
+      }
+
+      .search-box {
+        padding: 8px;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: #95d8ff;
+        border: 2px solid #0078d4;
+        width: 300px;
+      }
+
+      .details-modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      .details-modal-content {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-weight: 600;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 600px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+      }
+      .btn {
+              font-weight: 700;
+        background-color: #0078d4;
+              color: white;
+              border: none;
+              padding: 10px 10px;
+              border-radius: 5px;
+              cursor: pointer;
+              height: 40px;
+              width: 100px;
+      }
+
+      a {
+        color: #0078d4;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .blue {
+        border-right: 10px solid rgb(87, 4, 252);
+      }
+
+      .green {
+        border-right: 10px solid rgb(0, 171, 31);
+      }
+
+      .red {
+        border-right: 10px solid rgb(226, 0, 0);
+      }
+
+      .yellow {
+        border-right: 10px solid rgb(221, 221, 0);
+      }
+
+      .black {
+        border-right: 10px solid rgb(0, 0, 0);
+      }
+
+      .grey {
+        border-right: 10px solid rgb(196, 196, 196);
+      }
+      .tu {
+        text-transform: uppercase;
+      }
+
+      /* Base styles for both popups */
+.popup, .popup2 {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure the popups are above other content */
+  transition: all 0.3s; /* Add a smooth animation for the pop-up effect */
+}
+
+/* Styles for the content within the popups */
+.popup-content, .popup-content2 {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  animation: fadeIn 0.5s ease-in-out; /* Add a fade-in animation for the content */
+}
+
+/* Define a keyframe animation for fading in */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Optional styles for closing buttons */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  /* Add more styles as needed for your close button */
+}
+
+
+        
+    </style>
+  </head>
+  <body>
+    <h1>  <p>Email: <span id="userEmail"></span></p></h1>
+    <div class="search-container">
+      <input
+        type="text"
+        class="search-box"
+        id="searchBox"
+        placeholder="Search for Employees.."
+        onkeyup="searchEmployees()"
+      />
+      <button onclick="openPopup()" class="btn">Add</button>
+     
+
+      
+    <div class="popup" id="popup">
+      <div class="popup-content">
+          <h3>Enter Employee Details</h3>
+          <form action="/setLeadname" method="post">
+              <label for="empid">EmpID:</label>
+              <input type="text" name="empid" id="empid" required>
+          
+
+              <br>
+              <button type="submit">Submit</button>
+          </form>
+          <button onclick="closePopup()">Close</button>
+      </div>
+  </div>
+
+  <div class="popup2" id="popup2">
+    <div class="popup-content2">
+      <h3>Remove Employee Lead Name</h3>
+      <form action="/setLeadname" method="post">
+        <label for="empid">EmpID:</label>
+        <input type="text" name="empid" id="empid" required>
+        <br>
+        <button type="submit">Remove</button>
+      </form>
+      <button onclick="closePopup2()">Close</button>
+    </div>
+  </div>
+
+
+  <button onclick="openPopup2()" class="btn">REMOVE</button>
+        <button onclick="downloadasexcel()" class="btn" style="width: 200px;">DOWNLOAD .excel</button>
+        <button onclick="window.location.href='login'" class="btn" style="width: 200px;">LOGOUT</button>
+    </div>
+
+    <div class="container">
+      <% employees.forEach(function(employee) { %>
+      <div
+        class="employee-box <%= getBorderClass(employee.interaction, employee.leadinteraction) %>"
+        id="employee-box-<%= employee.empid %>"
+      >
+        <p><strong>EmpID:</strong> <%= employee.empid %></p>
+        <p>
+          <strong>Name:</strong> <%= employee.firstname %> <%= employee.lastname
+          %>
+        </p>
+        <p><strong>Email:</strong> <%= employee.email %></p>
+        <p><strong>LeadMail:</strong> <%= employee.leademail %></p>
+        <p><strong>ManagerMail:</strong> <%= employee.manageremail %></p>
+        <div class="button">
+         
+          <button
+            class="interaction-button"
+            data-empid="<%= employee.empid %>"
+            data-interaction="yes"
+            style="
+              font-weight: 700;
+              background-color: rgb(0, 171, 31);
+              color: white;
+              border: none;
+              padding: 10px 10px;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+          >
+            Yes
+          </button>
+          <button
+            class="interaction-button"
+            data-empid="<%= employee.empid %>"
+            data-interaction="no"
+            style="
+              font-weight: 700;
+              background-color: rgb(226, 0, 0);
+              color: white;
+              border: none;
+              padding: 10px 10px;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+          >
+            No  
+          </button>
+          
+          
+
+          <button
+            onclick="showDetails('<%= JSON.stringify(employee) %>')"
+            style="
+              background-color: #0078d4;
+              color: white;
+              border: none;
+              padding: 10px 10px;
+              border-radius: 5px;
+              cursor: pointer;
+            "
+          >
+            View Details
+          </button>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+
+    <div class="details-modal" id="detailsModal">
+      <div class="details-modal-content">
+        <span onclick="closeDetails()" style="cursor: pointer; float: right; font-size: 40px; margin-right: 10px; color: rgb(55, 0, 157);border-radius: 20px;width: 20px; font-weight: 900;font-family: ;">&times;</span>
+
+        <div id="detailsContent"></div>
+        <button
+          onclick="closeDetails()"
+          style="
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+        >
+          OK
+        </button>
+        <!-- Details will be displayed here -->
+      </div>
+      <br><br><br>
+    </div>
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const interactionButtons = document.querySelectorAll(
+          ".interaction-button"
+        );
+
+        interactionButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const empid = button.getAttribute("data-empid");
+            const interaction = button.getAttribute("data-interaction");
+
+            fetch(`/roundlead?empid=${empid}&interaction=${interaction}`, {
+              method: "POST",
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.success) {
+                  const employeeBox = document.getElementById(
+                    `employee-box-${empid}`
+                  );
+                  button.disabled = true;
+                  button.style.backgroundColor = "#999";
+                }
+              })
+
+              .catch((error) => {
+                console.error("Error updating interaction:", error);
+              });
+          });
+        });
+      });
+
+      function searchEmployees() {
+        var input, filter, employeeBoxes, i, txtValue;
+        input = document.getElementById("searchBox");
+        filter = input.value.toUpperCase();
+        employeeBoxes = document.querySelectorAll(".employee-box");
+
+        employeeBoxes.forEach(function (box) {
+          var paragraphs = box.querySelectorAll("p");
+          var found = false;
+
+          paragraphs.forEach(function (p) {
+            txtValue = p.textContent || p.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              found = true;
+            }
+          });
+
+          if (found) {
+            box.style.display = "block";
+          } else {
+            box.style.display = "none";
+          }
+        });
+      }
+      function showDetails(details) {
+        var modal = document.getElementById("detailsModal");
+        var modalContent = document.getElementById("detailsContent");
+        modalContent.innerHTML = "<h2>Details</h2>";
+        var employee = JSON.parse(details);
+        var excludedFields = ["password", "confirmpass"];
+
+        function formatFieldName(fieldName) {
+          return fieldName.replace(/_/g, " ").replace(/\w\S*/g, function (txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+          });
+        }
+
+        for (var key in employee) {
+          if (excludedFields.includes(key)) {
+            continue;
+          }
+
+          if (key === "interaction") {
+            if (employee[key] === "yes") {
+              modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(
+                key
+              )}:</strong></span> <span style="color: green;">${
+                employee[key]
+              }</span></p>`;
+            } else if (employee[key] === "no") {
+              modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(
+                key
+              )}:</strong></span> <span style="color: red;">Not Interacted</span></p>`;
+            } else {
+              modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(
+                key
+              )}:</strong></span> <span style="color: black;">Not available</span></p>`;
+            }
+          } else {
+            modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(
+              key
+            )}:</strong></span> ${employee[key] || "Not available"}</p>`;
+          }
+        }
+        modal.style.display = "block";
+      }
+      function closeDetails() {
+        var modal = document.getElementById("detailsModal");
+        modal.style.display = "none";
+      }
+
+        function addemp() {
+            window.location.href = "registration";
+        }
+
+
+        function openPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        function openPopup2() {
+          const popup2 = document.getElementById('popup2');
+    popup2.style.display = 'block';
+        }
+
+        function closePopup2() {
+            document.getElementById("popup2").style.display = "none";
+        }
+    
+    const params = new URLSearchParams(window.location.search);
+    const userEmail = params.get('email');
+    // Display the email on the page
+    document.getElementById('userEmail').textContent = userEmail;
+   
+    <button id="print-button" class="print-button" onclick="window.print()">Print Table to PDF</button>
+
+   </script>
+  </body>
+</html>

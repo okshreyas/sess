@@ -1,0 +1,88 @@
+To transition your Node.js application from MySQL to MSSQL, you need to make several changes to your code. Below, I've provided a modified version of your code that uses the `mssql` package to connect to a Microsoft SQL Server database. You should replace your existing MySQL code with this code:
+
+```javascript
+const express = require('express');
+const bodyParser = require('body-parser');
+const sql = require('mssql'); // Use the 'mssql' package for Microsoft SQL Server
+const app = express();
+const port = 3000;
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const session = require('express-session');
+
+// Add your MSSQL database configuration
+const config = {
+  user: 'your-username',
+  password: 'your-password',
+  server: 'your-server-name',
+  database: 'your-database-name',
+  options: {
+    encrypt: true, // Use if you're connecting to Azure SQL Database
+  },
+};
+
+// Use 'express-session' middleware
+app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+// Configure passport and your authentication logic here
+
+// Initialize the MSSQL database connection
+sql.connect(config, (err) => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+  } else {
+    console.log('Connected to the database');
+  }
+});
+
+// Define a function to retrieve user by ID from MSSQL
+function getUserById(id, callback) {
+  const request = new sql.Request();
+  request.input('id', sql.Int, id);
+  request.query('SELECT * FROM users WHERE id = @id', (err, result) => {
+    if (err) {
+      return callback(err, null);
+    }
+    if (result.recordset.length === 1) {
+      return callback(null, result.recordset[0]);
+    } else {
+      return callback(null, null);
+    }
+  });
+}
+
+// Passport and route definitions here
+
+app.get('/person/:empid', (req, res) => {
+  if (req.isAuthenticated()) {
+    const empid = req.params.empid;
+    const request = new sql.Request();
+    request.input('empid', sql.Int, empid);
+    request.query('SELECT * FROM users WHERE empid = @empid', (err, result) => {
+      if (err) {
+        console.error('Database query error: ' + err.message);
+        res.status(500).send('Error fetching person details.');
+      } else if (result.recordset.length === 0) {
+        res.status(404).send('Person not found.');
+      } else {
+        res.json(result.recordset[0]);
+      }
+    });
+  } else {
+    res.redirect('/login');
+  }
+});
+
+// Define other routes and logic
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});
+```
+
+Please note that the code above is a modified version of your original code to work with the `mssql` package. You'll need to adapt your authentication logic and route handling as needed for your specific application. Additionally, make sure you have installed the `mssql` package using `npm install mssql`.

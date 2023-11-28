@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Table to PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .table-data {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .table-data, .table-data th, .table-data td {
+            border: 1px solid black;
+        }
+        .table-data th, .table-data td {
+            padding: 8px;
+            text-align: left;
+        }
+        .print-button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Your Page Content</h1>
+    <p>This is some content on the page.</p>
+
+    <table class="table-data">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>John</td>
+                <td>30</td>
+            </tr>
+            <tr>
+                <td>Jane</td>
+                <td>25</td>
+            </tr>
+            <tr>
+                <td>Bob</td>
+                <td>40</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button id="print-button" class="print-button" onclick="window.print()">Print Table to PDF</button>
+</body>
+</html>

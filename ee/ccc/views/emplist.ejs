@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Data Table</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    background-color: #f5f5f5;
+    margin: 40px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Change to 'flex-start' to align content to the top */
+    align-items: center;
+    min-height: 100vh;
+    zoom: 0.9;
+}
+
+
+       h1 {
+    background: linear-gradient(to right, #3498db, #250bb5);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin: 0;
+    border-radius: 12px 12px 0 0;
+    width: 100%;
+    position: fixed; /* Add this line to make the title stick to the top */
+    top: 0; /* Add this line to position it at the top of the viewport */
+}
+
+
+        table {
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-top: 1px solid #3498db;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 160px; /* Adjust the value as needed to maintain the desired spacing between title and table */
+}
+
+        /* Media query for smaller screens */
+        @media (max-width: 768px) {
+            body {
+                font-size: 14px;
+            }
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            transition: background-color 0.2s, transform 0.2s;
+            border: 1px solid #e5e5e5;
+        }
+
+        th {
+            /* add background-color as linear gradient with going up */
+            background: linear-gradient(to top, #3498db, #250bb5);
+            color: #fff;
+        }
+
+        /* Set the width for Question 1 to 9 cells to 50px */
+        td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(7), td:nth-child(8), td:nth-child(9), td:nth-child(10), td:nth-child(11), td:nth-child(12), td:nth-child(13)  {
+            width: 20px;
+            max-width: 20px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #e0e0e0;
+        }
+
+        tr {
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        tr:hover {
+            background-color: #ffe5a4;
+        }
+
+        /* Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+            transition: ease-in-out 0.3s;
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            max-width: 80%;
+            font-size: 34px;
+        }
+
+        /* Close button styles */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+        }
+
+        /* Add ellipsis to long text in Feedback Text cell */
+        .feedback-text {
+            max-width: 200px; /* Adjust the maximum width as needed */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            color: #0205b5;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: #0205b5;
+            font-weight: bold;
+        }
+
+        .search-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 16px;
+            outline: #95d8ff;
+            border: 2px solid #0078d4;
+        }
+        .btn{
+            background-color: #405cf5;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            padding: 15px 30px;
+            margin-left: 40px;
+            margin-top: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.2s ease-in;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            
+
+        }
+    </style>
+</head>
+<body>
+    <h1>FEEDBACK DATA TABLE</h1>
+    <div class="search-container">
+        
+
+     <input type="text" class="search-box" id="searchBox" placeholder="Enter Empid To search" onkeyup="searchEmployees()">
+     <button onclick="downloadCSV()" class="btn">Download CSV</button>
+     <button class="btn" onclick="goBack()" style="background-color: rgb(255, 156, 51); color: #333;">HOMEPAGE</button>
+        <button class="btn" onclick="window.location.href='/login'" style="background-color: rgb(226, 1, 8);">LOGOUT</button>
+ 
+</div>
+
+ 
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Employee ID</th>
+                <th>Employee Name</th>
+                <th>Lead Mail</th>
+                <th>Is one-one Completed?</th>
+                <th>Operational targets?</th>
+                <th>Achievements?</th>
+                <th>Improvement measures?</th>
+                <th>STerm LTerm goals?</th>
+                <th>Training Requirements?</th>
+                <th>TL supportive?</th>
+                <th>OneOne Documented?</th>
+                <th>Documented shared with you?</th>
+                <th>Feedback Text</th>
+                <th>Feedback Time</th>
+                <th>Feedback Date</th>
+                <th>Feedback Month</th>
+                <th>Feedback Year</th>
+                <th>Quarter</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Replace with actual employee data -->
+            <% data.forEach(row => { %>
+                <tr>   
+                    <td><%= row.id %></td>
+                    <td style="text-decoration: none; color: #333;"><a href="">
+                         <!-- #employee_profile/<%= row.empid %> -->
+                         <%= row.empid %></a></td>
+                    <td><%= row.full_name %></td>
+                         <td><%= row.leadname %></a></td>
+                    <td><%= row.question1 %></td>
+                    <td><%= row.question2 %></td>
+                    <td><%= row.question3 %></td>
+                    <td><%= row.question4 %></td>
+                    <td><%= row.question5 %></td>
+                    <td><%= row.question6 %></td>
+                    <td><%= row.question7 %></td>
+                    <td><%= row.question8 %></td>
+                    <td><%= row.question9 %></td>
+                    <td class="feedback-text"><%= row.feedback_text %></td>
+                    <td><%= row.feedback_time %></td>
+                    <td><%= row.feedback_date %></td>
+                    <td><%= row.feedback_month %></td>
+                    <td><%= row.feedback_year %></td>
+                    <td><%= row.quarter %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <!-- Popup HTML -->
+    <div class="popup" id="feedbackPopup">
+        <div class="popup-content">
+            <span class="close-btn" id="closePopup">&times;</span>
+            <p id="popupFeedbackText"></p>
+        </div>
+    </div>
+
+    <script>
+     downloadCSV = () => {
+        const rows = document.querySelectorAll('table tr');
+        const csv = [];
+        for (let i = 0; i < rows.length; i++) {
+            const row = [], cols = rows[i].querySelectorAll('td, th');
+            for (let j = 0; j < cols.length; j++) {
+                const cell = cols[j].innerText.replace(',', '');
+                row.push(cell);
+            }
+            csv.push(row.join(','));
+        }
+        const csvString = csv.join('\n');
+        const a = document.createElement('a');
+        a.href = 'data:attachment/csv,' + encodeURIComponent(csvString);
+        a.target = '_blank';
+        a.download = 'feedback.csv';
+        document.body.appendChild(a);
+        a.click();
+     }
+        function convertToYesNo(value) {
+            return value ? "Yes" : "No";
+        }
+
+        // Add custom IDs and convert values to "Yes" and "No"
+        document.addEventListener("DOMContentLoaded", function () {
+            const table = document.querySelector('table');
+            const rows = table.querySelectorAll('tbody tr');
+            rows.forEach((row, index) => {
+                const customIDCell = row.cells[0];
+                customIDCell.textContent = index + 1;
+
+                // Convert Question 1 to 9 values to "Yes" or "No"
+                for (let i = 3; i <= 12; i++) {
+                    const cell = row.cells[i];
+                    cell.textContent = convertToYesNo(parseInt(cell.textContent));
+                }
+
+                // Set click event for feedback text cell
+                const feedbackTextCell = row.querySelector('.feedback-text');
+                feedbackTextCell.style.cursor = 'pointer';
+                feedbackTextCell.addEventListener('click', function () {
+                    const popup = document.getElementById('feedbackPopup');
+                    const popupFeedbackText = document.getElementById('popupFeedbackText');
+                    popupFeedbackText.textContent = row.cells[13].textContent;
+                    popup.style.display = 'block';
+                });
+            });
+
+            // Add click event to close the popup
+            const closePopupButton = document.getElementById('closePopup');
+            closePopupButton.addEventListener('click', function () {
+                const popup = document.getElementById('feedbackPopup');
+                popup.style.display = 'none';
+            });
+        });
+
+        function searchEmployees() {
+        const input = document.getElementById('searchBox');
+        const filter = input.value.toUpperCase();
+        const table = document.querySelector('table');
+        const rows = table.querySelectorAll('tbody tr');
+
+        rows.forEach(row => {
+            const text = row.textContent.toUpperCase();
+            if (text.includes(filter)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+
+    function empidlinkbyempid(empid) {
+        return '/employee_profile/' + empid;
+    }
+
+    function goBack() {
+    window.history.back();
+  }
+    
+    </script>
+</body>
+</html>

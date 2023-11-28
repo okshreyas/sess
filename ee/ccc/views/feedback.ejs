@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Application Form</title>
+   <style>
+      body {
+        background: linear-gradient(to bottom, #512DA8, #303F9F);
+        color: #fff;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 26px;
+      }
+
+      .testbox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      form {
+        width: 100%;
+        max-width: 1000px;
+        padding: 20px;
+        border-radius: 6px;
+        background: rgba(249, 255, 216, 0);
+        box-shadow: 0 0 25px 0 #303F9F;
+      }
+
+      .banner {
+        background-size: cover;
+        background-position: center;
+        height: 210px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+      }
+
+      .banner h1 {
+        font-size: 38px;
+        color: #fff;
+        z-index: 2;
+      }
+
+      .question {
+        margin: 20px 0;
+      }
+
+      .question p {
+        font-size: 26px;
+        
+      }
+
+      .question-answer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      input[type=radio] {
+        --s: 1em;     /* control the size */
+        --c: #ffffff; /* the active color */
+        height: var(--s);
+        aspect-ratio: 1;
+        border: calc(var(--s)/8) solid #ffffff;
+        padding: calc(var(--s)/8);
+        background: radial-gradient(farthest-side, var(--c) 94%, #0000) 50%/0 0 no-repeat content-box;
+        border-radius: 20%;
+        outline-offset: calc(var(--s)/10);
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        font-size: inherit;
+        transition: .2s;
+        width: 1em; /* Set the width and height to the same value to create a square */
+  height: 1em;
+        margin-right: 10px;
+        margin-left: 20px;
+      }
+
+      input[type=radio]:checked {
+        border-color: var(--c);
+        background-size: 100% 100%;
+background: linear-gradient(#ffef11 0 0) 50%/100% 100% no-repeat content-box;
+}
+
+      input[type=radio]:disabled {
+        background: linear-gradient(#939393 0 0) 50%/100% 20% no-repeat content-box;
+        opacity: .5;
+        cursor: not-allowed;
+      }
+
+      @media print {
+        input[type=radio] {
+          -webkit-appearance: auto;
+          -moz-appearance: auto;
+          appearance: auto;
+          background: none;
+        }
+      }
+
+      label {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 5px 0;
+        cursor: pointer;
+      }
+
+      .item {
+        margin: 20px 0;
+      }
+
+      .item p {
+        font-size: 18px;
+      }
+
+      .item textarea {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        /* Let's add font spacing */
+        letter-spacing: 0.5px;
+        font-size: 16px;
+        font-weight: 500;
+        width: 80%;
+        padding: 10px;
+        border: 1px solid #ffffff;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        resize: none;
+        transition: ease-in-out 1s;
+      }
+
+      .btn-block {
+        text-align: center;
+        margin-top: 20px;
+        align-items: center;
+      }
+
+      button {
+        width: 150px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background: #ccb6ff; /* Purple */
+        font-size: 18px;
+        color: #000000;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+        font-weight: bold;
+      }
+
+      button:hover {
+        background: #fffcd5; /* Light Yellow */
+        transform: scale(1.05);
+        color: #000;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="banner">
+            <h1 style="border: 2px solid #fff; padding: 10px; border-radius: 10px; width: 500px;">
+              Feedback Application</h1>
+    </div>
+    <div class="testbox">
+<form action="/process_form" method="POST">
+        
+        <!-- Question 1: Is One on One Completed? -->
+<div class="question">
+  <p>Is One on One Completed?</p>
+  <div class="question-answer">
+    <div>
+      <input type="radio" value="Yes" id="radio_one_on_one_yes" name="one_on_one_completed" required/>
+      <label for="radio_one_on_one_yes" class="radio"><span>Yes</span></label>
+      <input type="radio" value="No" id="radio_one_on_one_no" name="one_on_one_completed" required/>
+      <label for="radio_one_on_one_no" class="radio"><span>No</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Question 2: Discussion on Operational targets? -->
+<div class="question">
+  <p>Discussion on Operational targets?</p>
+  <div class="question-answer">
+    <div>
+      <input type="radio" value="Yes" id="radio_operational_targets_yes" name="operational_targets_discussion" required/>
+      <label for="radio_operational_targets_yes" class="radio"><span>Yes</span></label>
+      <input type="radio" value="No" id="radio_operational_targets_no" name="operational_targets_discussion" required/>
+      <label for="radio_operational_targets_no" class="radio"><span>No</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Question 3: Discussion on achievements? -->
+<div class="question">
+  <p>Discussion on achievements?</p>
+  <div class="question-answer">
+    <div>
+      <input type="radio" value="Yes" id="radio_achievements_yes" name="achievements_discussion" required/>
+      <label for="radio_achievements_yes" class="radio"><span>Yes</span></label>
+      <input type="radio" value="No" id="radio_achievements_no" name="achievements_discussion" required/>
+      <label for="radio_achievements_no" class="radio"><span>No</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Question 4: Discussion corrective/improvement measures? -->
+<div class="question">
+  <p>Discussion corrective/improvement measures?</p>
+  <div class="question-answer">
+    <div>
+      <input type="radio" value="Yes" id="radio_correction_yes" name="correction_discussion" required/>
+      <label for="radio_correction_yes" class="radio"><span>Yes</span></label>
+      <input type="radio" value="No" id="radio_correction_no" name="correction_discussion" required/>
+      <label for="radio_correction_no" class="radio"><span>No</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Question 5: Discussion on short term and long term goals? -->
+<div class="question">
+  <p>Discussion on short term and long term goals?</p>
+  <div class="question-answer">
+    <div>
+      <input type="radio" value="Yes" id="radio_goals_yes" name="goals_discussion" required/>
+      <label for="radio_goals_yes" class="radio"><span>Yes</span></label>
+      <input type="radio" value="No" id="radio_goals_no" name="goals_discussion" required/>
+      <label for="radio_goals_no" class="radio"><span>No</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Question 6: Discussion on training requirements? -->
+<div class="question">
+  <p>Discussion on training requirements?</p>
+  <div class="question-answer">
+    <div>
+      <input type="radio" value="Yes" id="radio_training_yes" name="training_discussion" required/>
+      <label for="radio_training_yes" class="radio"><span>Yes</span></label>
+      <input type="radio" value="No" id="radio_training_no" name="training_discussion" required/>
+      <label for="radio_training_no" class="radio"><span>No</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Question 7: Is your TL supportive? -->
+<div class="question">
+  <p>Is your TL supportive?</p>
+  <div class="question-answer">
+    <div>
+      <input type="radio" value="Yes" id="radio_tl_supportive_yes" name="tl_supportive" required/>
+      <label for="radio_tl_supportive_yes" class="radio"><span>Yes</span></label>
+      <input type="radio" value="No" id="radio_tl_supportive_no" name="tl_supportive" required/>
+      <label for="radio_tl_supportive_no" class="radio"><span>No</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Question 8: Has the One-O-One documented? -->
+<div class="question">
+  <p>Has the One-O-One documented?</p>
+  <div class="question-answer">
+    <div>
+      <input type="radio" value="Yes" id="radio_documented_yes" name="one_on_one_documented" required/>
+      <label for="radio_documented_yes" class="radio"><span>Yes</span></label>
+      <input type="radio" value="No" id="radio_documented_no" name="one_on_one_documented" required/>
+      <label for="radio_documented_no" class="radio"><span>No</span></label>
+    </div>
+  </div>
+</div>
+
+<!-- Question 9: Is the One-O-One documented shared with you? -->
+<div class="question">
+  <p>Do you need any counselling to maintain your work life balance?</p>
+  <div class="question-answer">
+    <div>
+      <input type="radio" value="Yes" id="radio_documented_shared_yes" name="one_on_one_documented_shared" required/>
+      <label for="radio_documented_shared_yes" class="radio"><span>Yes</span></label>
+      <input type="radio" value="No" id="radio_documented_shared_no" name="one_on_one_documented_shared" required/>
+      <label for="radio_documented_shared_no" class="radio"><span>No</span></label>
+    </div>
+  </div>
+</div>
+
+<input type="hidden" id="feedback_date" name="feedback_date" value="">
+<input type="hidden" id="feedback_time" name="feedback_time" value="">
+<input type="hidden" id="feedback_month" name="feedback_month" value="">
+<input type="hidden" id="feedback_year" name="feedback_year" value="">
+<input type="hidden" id="quarter" name="quarter" value="">
+
+
+
+
+        <div class="item">
+          <p>Concerns Or Feedback (confidential)</p>
+          <div class="question-answer">
+            <div>
+              <textarea rows="3" name="additional_message" required></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="btn-block" style="margin-right: 300px;">
+          <button type="submit" value="Register" class="submit" name="submit">Submit</button>
+
+          <button type="button" value="Cancel" class="cancel" name="cancel" onclick="window.location.href='/info'">Cancel</button>
+          <button type="reset" value="Clear" class="clear" name="clear">Clear</button>
+        </form>
+    </div>
+    <script>
+      function handleSubmit() {
+        // Get the current date and time
+        const currentDate = new Date();
+        const date = currentDate.getDate();
+        const month = currentDate.getMonth() + 1; // Month is zero-based
+        const year = currentDate.getFullYear();
+        
+        // Calculate the quarter (starts from April)
+        const quarter = month >= 4 && month <= 6 ? "Q1" : month >= 7 && month <= 9 ? "Q2" : month >= 10 && month <= 12 ? "Q3" : "Q4";
+        
+        // Get current time (HH:MM:SS format)
+        const hours = currentDate.getHours().toString().padStart(2, '0');
+        const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+        const seconds = currentDate.getSeconds().toString().padStart(2, '0');
+        const currentTime = `${hours}:${minutes}:${seconds}`;
+        
+        // Set the values of hidden input fields
+        document.getElementById("feedback_date").value = date;
+        document.getElementById("feedback_time").value = currentTime;
+        document.getElementById("feedback_month").value = month;
+        document.getElementById("feedback_year").value = year;
+        document.getElementById("quarter").value = quarter;
+
+
+
+        // You can add your additional form validation or data submission logic here.
+        // Return false to prevent the form from being submitted if needed.
+        // For demonstration purposes, we'll display an alert.
+        alert("Form submitted with current date, time, month, year, and quarter.");
+        return true; // Set to false if you want to prevent form submission
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>emp</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #ddd;
+        }
+
+        /* good looking search box */
+        .search-box {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Employee Details</h1>
+    
+     realtime search box from table
+    <div class="search-box">
+        <input type="text" id="searchBox" onkeyup="searchEmployees()" placeholder="Search by empid or firstname or lastname or managername or leadname">
+    </div>
+
+    <!-- button for download as excel with good css class -->
+    <button onclick="downloadacsv('tblData')">Export Table Data To Excel File</button>
+    <table id="tblData">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Employee ID</th>
+                <th>Email</th>
+                <th>Contact Number</th>
+                <th>Lead Name</th>
+                <th>Manager Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% employees.forEach(function(employee) { %>
+                <tr>
+                    <td><%= employee.id %></td>
+                    <td><%= employee.firstname %></td>
+                    <td><%= employee.lastname %></td>
+                    <td><%= employee.empid %></td>
+                    <td><%= employee.email %></td>
+                    <td><%= employee.contactnumber %></td>
+                    <td><%= employee.leadname %></td>
+                    <td><%= employee.managername %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    //table with employee details and button for mre
+
+    <!-- script for search box -->
+    <script>
+        // Search by empid or firstname or lastname or managername or leadname at realtime
+        function searchEmployees() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchBox");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("tblData");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td1 = tr[i].getElementsByTagName("td")[0];
+                td2 = tr[i].getElementsByTagName("td")[1];
+                td3 = tr[i].getElementsByTagName("td")[2];
+                td4 = tr[i].getElementsByTagName("td")[3];
+                td5 = tr[i].getElementsByTagName("td")[4];
+                td6 = tr[i].getElementsByTagName("td")[5];
+                td7 = tr[i].getElementsByTagName("td")[6];
+                td8 = tr[i].getElementsByTagName("td")[7];
+                if (td1 || td2 || td3 || td4 || td5 || td6 || td7 || td8) {
+                    txtValue1 = td1.textContent || td1.innerText;
+                    txtValue2 = td2.textContent || td2.innerText;
+                    txtValue3 = td3.textContent || td3.innerText;
+                    txtValue4 = td4.textContent || td4.innerText;
+                    txtValue5 = td5.textContent || td5.innerText;
+                    txtValue6 = td6.textContent || td6.innerText;
+                    txtValue7 = td7.textContent || td7.innerText;
+                    txtValue8 = td8.textContent || td8.innerText;
+                    if (txtValue1.toUpperCase().indexOf(filter) > -1 || txtValue2.toUpperCase().indexOf(filter) > -1 || txtValue3.toUpperCase().indexOf(filter) > -1 || txtValue4.toUpperCase().indexOf(filter) > -1 || txtValue5.toUpperCase().indexOf(filter) > -1 || txtValue6.toUpperCase().indexOf(filter) > -1 || txtValue7.toUpperCase().indexOf(filter) > -1 || txtValue8.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+
+
+
+
+    
+       //write function for download as csv file
+         function exportTableToExcel(tableID, filename = ''){
+            var downloadLink;
+            var dataType = 'application/vnd.ms-excel';
+            var tableSelect = document.getElementById(tableID);
+            var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20');
+            
+            // Specify file name
+            filename = filename?filename+'.xls':'excel_data.xls';
+            
+            // Create download link element
+            downloadLink = document.createElement("a");
+            
+            document.body.appendChild(downloadLink);
+            
+            if(navigator.msSaveOrOpenBlob){
+                var blob = new Blob(['\ufeff', tableHTML], {
+                    type: dataType
+                });
+                navigator.msSaveOrOpenBlob( blob, filename);
+            }else{
+                // Create a link to the file
+                downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+            
+                // Setting the file name
+                downloadLink.download = filename;
+                
+                //triggering the function
+                downloadLink.click();
+            }
+        }
+
+
+        function showmoredetailsaspopupanimated(details) {
+            var modal = document.getElementById("detailsModal");
+            var modalContent = document.getElementById("detailsContent");
+            modalContent.innerHTML = "<h2>Details</h2>";
+            var employee = JSON.parse(details);
+            var excludedFields = ["password", "confirmpass"];
+            function formatFieldName(fieldName) {
+                return fieldName.replace(/_/g, ' ').replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+            }
+            for (var key in employee) {
+                if (excludedFields.includes(key)) {
+                    continue;
+                }
+                if (key === "leadinteraction") {
+                    if (employee[key] === "yes") {
+                        modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(key)}:</strong></span> <span style="color: green;">${employee[key]}</span></p>`;
+                    } else if (employee[key] === "no") {
+                        modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(key)}:</strong></span> <span style="color: red;">Not Interacted</span></p>`;
+                    } else {
+                        modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(key)}:</strong></span> <span style="color: black;">Not available</span></p>`;
+                    }
+                } else {
+                    modalContent.innerHTML += `<p><span style="width: 150px; display: inline-block;"><strong>${formatFieldName(key)}:</strong></span> ${employee[key] || "Not available"}</p>`;
+                }
+            }
+            modal.style.display = "block";
+        }
+        function closeDetails() {
+            var modal = document.getElementById("detailsModal");
+            modal.style.display = "none";
+        }
+
+
+    </script>
+</body>
+</html>
